@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyCEDICNkOgKTYZM1I8TfssOTehwyn4zHlk</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1047214153265</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.psmproject.psmProject</string>
+	<key>PROJECT_ID</key>
+	<string>maintenance-project-470e8</string>
+	<key>STORAGE_BUCKET</key>
+	<string>maintenance-project-470e8.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1047214153265:ios:4013be96ae67285f09bf10</string>
+</dict>
+</plist>
