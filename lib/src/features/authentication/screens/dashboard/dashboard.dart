@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:psm_project/src/constants/colors.dart';
 import 'package:psm_project/src/constants/image_strings.dart';
 import 'package:psm_project/src/constants/sizes.dart';
 import 'package:psm_project/src/constants/text_strings.dart';
+import 'package:psm_project/src/features/authentication/screens/profile/profile_screen.dart';
 import 'package:psm_project/src/repository/authentication_repository/authentication_repository.dart';
 
 class Dashboard extends StatelessWidget {
@@ -21,9 +23,7 @@ class Dashboard extends StatelessWidget {
           Container(
             margin: const EdgeInsets.only(right: 20, top: 7),
             decoration: BoxDecoration(borderRadius: BorderRadius.circular(10), color: tCardBgColor),
-            child: IconButton(onPressed: (){
-              AuthenticationRepository.instance.logout();
-            }, icon: const Image(image: AssetImage(tUserProfileImage))),
+            child: IconButton(onPressed: () => Get.to(() => const ProfileScreen()), icon: const Image(image: AssetImage(tUserProfileImage))),
           )
         ],
       ),

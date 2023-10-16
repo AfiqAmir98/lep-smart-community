@@ -38,3 +38,17 @@ const String tResetViaPhone = "Reset Via Phone Number";
 const String tDashboardTitle = "LEP Smart Community";
 const String tDashboardHeading = "Maintenance App";
 
+const String tProfile = "Profile";
+const String tEditProfile = "Edit Profile";
+const String tLogoutDialogHeading = "Logout";
+const String tProfileHeading = "LEP Smart Community";
+const String tProfileSubHeading = "LEP Smart Community";
+
+const String tMenu1 = "Settings";
+const String tMenu4 = "Information";
+const String tMenu2 = "Billing Details";
+const String tMenu3 = "User Management";
+
+const String tDelete = "Delete";
+const String tJoined = "Joined";
+const String tJoinedAt = "31 October 2023";

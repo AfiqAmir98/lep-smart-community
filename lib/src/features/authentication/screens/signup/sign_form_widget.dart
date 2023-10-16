@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:psm_project/src/constants/sizes.dart';
 import 'package:psm_project/src/constants/text_strings.dart';
 import 'package:psm_project/src/features/authentication/controllers/signup_controller.dart';
+import 'package:psm_project/src/features/authentication/models/user_model.dart';
 
 
 class SignUpFormWidget extends StatefulWidget {
@@ -89,11 +90,16 @@ class _SignUpFormWidgetState extends State<SignUpFormWidget> {
               child: ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
-                    SignUpController.instance.registerUser(
-                        controller.email.text.trim(),
-                        controller.password.text.trim(),
-                        selectedUserRole,
+                    final user = UserModel(
+                      email: controller.email.text.trim(),
+                      password: controller.password.text.trim(),
+                      fullName: controller.fullName.text.trim(),
+                      phoneNo: controller.phoneNo.text.trim(),
+                      address: controller.address.text.trim(),
+                      icNo: controller.icNo.text.trim(),
+                      role: selectedUserRole.toString().split('.').last, // Convert enum to String
                     );
+                    SignUpController.instance.createUser(user, selectedUserRole);
                   }
                 },
                 child: Text(tSignup.toUpperCase()),
