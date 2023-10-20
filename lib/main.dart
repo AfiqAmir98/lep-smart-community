@@ -26,7 +26,7 @@ class App extends StatelessWidget {
       theme: TAppTheme.lightTheme,
       darkTheme: TAppTheme.darkTheme,
       themeMode: ThemeMode.system,
-      home: const CircularProgressIndicator(),
+      home: WelcomeScreen(),
     );
   }
 }

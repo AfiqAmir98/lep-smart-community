@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:psm_project/src/features/authentication/screens/dashboard/resident_dashboard.dart';
 import 'package:psm_project/src/features/authentication/screens/welcome/welcome_screen.dart';
 import 'package:psm_project/src/features/authentication/screens/dashboard/dashboard.dart';
 
@@ -18,6 +19,7 @@ class AuthenticationRepository extends GetxController {
   //Variables
   final _auth = FirebaseAuth.instance;
   late final Rx<User?> firebaseUser;
+  var verificationId = ''.obs;
 
 
   //Will be load when app launches this func will be called and set the firebaseUser state
@@ -33,7 +35,7 @@ class AuthenticationRepository extends GetxController {
   /// If we are setting initial screen from here
   /// then in the main.dart => App() add CircularProgressIndicator()
   _setInitialScreen(User? user) {
-    user == null ? Get.offAll(() => const WelcomeScreen()) : Get.offAll(() => const Dashboard());
+    user == null ? Get.offAll(() => const WelcomeScreen()) : Get.offAll(() => const MyHomePage());
   }
 
 
@@ -42,25 +44,6 @@ class AuthenticationRepository extends GetxController {
     try {
       await _auth.createUserWithEmailAndPassword(email: email, password: password);
 
-      // Set user role based on the selected role
-      // Implement your logic to store user role in the database or user claims
-      switch (role) {
-        case UserRole.resident:
-        // Set user role as resident
-        // Redirect to resident dashboard after successful signup
-          _redirectToDashboard(Dashboard());
-          break;
-        case UserRole.admin:
-        // Set user role as admin
-        // Redirect to admin dashboard after successful signup
-          _redirectToDashboard(adminDashboard());
-          break;
-        case UserRole.maintenance:
-        // Set user role as maintenance
-        // Redirect to maintenance dashboard after successful signup
-          _redirectToDashboard(maintenanceDashboard());
-          break;
-      }
     } on FirebaseAuthException catch (e) {
       final ex = SignUpWithEmailPasswordFailure.code(e.code);
       print('FIREBASE AUTH EXCEPTION - ${ex.message}');
