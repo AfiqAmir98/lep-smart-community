@@ -7,6 +7,7 @@ const String tWelcomeSubTitle = "Please login first";
 
 const String tLogin = "Login";
 const String tSignup = "Sign Up";
+const String tSubmit = "Submit";
 
 const String tLoginTitle = "Welcome Back";
 const String tLoginSubtitle = "Please Login";
@@ -28,6 +29,10 @@ const String tFullName = "Full Name";
 const String tPhoneNo = "Phone Number";
 const String tIcNumber = "I/C Number";
 const String tAddress = "Address";
+
+const String tTitle = "Title";
+const String tLocation = "Location";
+const String tDescription = "Description";
 
 
 const String tForgotPasswordTitle = "Make Selction !";
@@ -52,3 +57,5 @@ const String tMenu3 = "User Management";
 const String tDelete = "Delete";
 const String tJoined = "Joined";
 const String tJoinedAt = "31 October 2023";
+
+const String tComplaintHeader = "Complaint Form";

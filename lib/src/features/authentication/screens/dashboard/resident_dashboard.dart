@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:psm_project/src/features/authentication/screens/complaint/complaint.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../constants/image_strings.dart';
@@ -8,7 +9,7 @@ import '../../../../constants/text_strings.dart';
 import '../profile/profile_screen.dart';
 
 class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   State<MyHomePage> createState() => _MyHomePageState();
@@ -48,7 +49,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 const SizedBox(height: 50),
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 30),
-                  title: Text('Hello Resident Ahad!', style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                  title: Text('Hello Resident!', style: Theme.of(context).textTheme.headlineSmall?.copyWith(
                       color: Colors.white
                   )),
                   subtitle: Text('Welcome Back', style: Theme.of(context).textTheme.titleMedium?.copyWith(
@@ -76,14 +77,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 crossAxisSpacing: 40,
                 mainAxisSpacing: 30,
                 children: [
-                  itemDashboard('Videos', LineAwesomeIcons.video, Colors.deepOrange),
-                  itemDashboard('Analytics', LineAwesomeIcons.pie_chart, Colors.green),
-                  itemDashboard('Audience', LineAwesomeIcons.users, Colors.purple),
-                  itemDashboard('Comments', LineAwesomeIcons.rocket_chat, Colors.brown),
-                  itemDashboard('Revenue', LineAwesomeIcons.money_bill, Colors.indigo),
-                  itemDashboard('Upload', LineAwesomeIcons.upload, Colors.teal),
-                  itemDashboard('About', LineAwesomeIcons.question, Colors.blue),
-                  itemDashboard('Contact', LineAwesomeIcons.phone, Colors.pinkAccent),
+                  clickableItemDashboard('Videos', LineAwesomeIcons.video, Colors.deepOrange),
+                  clickableItemDashboard('Analytics', LineAwesomeIcons.pie_chart, Colors.green),
+                  clickableItemDashboard('Audience', LineAwesomeIcons.users, Colors.purple),
+                  clickableItemDashboard('Comments', LineAwesomeIcons.rocket_chat, Colors.brown),
+                  clickableItemDashboard('Revenue', LineAwesomeIcons.money_bill, Colors.indigo),
+                  clickableItemDashboard('Upload', LineAwesomeIcons.upload, Colors.teal),
+                  clickableItemDashboard('About', LineAwesomeIcons.question, Colors.blue),
+                  clickableItemDashboard('Contact', LineAwesomeIcons.phone, Colors.pinkAccent),
                 ],
               ),
             ),
@@ -94,33 +95,44 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
-  itemDashboard(String title, IconData iconData, Color background) => Container(
-    decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(10),
-        boxShadow: [
-          BoxShadow(
-              offset: const Offset(0, 5),
-              color: Theme.of(context).primaryColor.withOpacity(.2),
-              spreadRadius: 2,
-              blurRadius: 5
-          )
-        ]
-    ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: background,
-              shape: BoxShape.circle,
-            ),
-            child: Icon(iconData, color: Colors.white)
+  GestureDetector clickableItemDashboard(String title, IconData iconData, Color background) {
+    return GestureDetector(
+      onTap: () {
+        // Handle button click here
+        print('$title button clicked');
+        // You can navigate to a new screen or perform any other action on button click
+        Get.to(() => const ComplaintScreen());
+      },
+      child: Container(
+        decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: [
+              BoxShadow(
+                  offset: const Offset(0, 5),
+                  color: Theme.of(context).primaryColor.withOpacity(.2),
+                  spreadRadius: 2,
+                  blurRadius: 5
+              )
+            ]
         ),
-        const SizedBox(height: 8),
-        Text(title.toUpperCase(), style: Theme.of(context).textTheme.titleMedium)
-      ],
-    ),
-  );
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              padding: const EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                color: background,
+                shape: BoxShape.circle,
+              ),
+              child: Icon(iconData, color: Colors.white),
+            ),
+            const SizedBox(height: 8),
+            Text(title.toUpperCase(), style: Theme.of(context).textTheme.titleMedium),
+          ],
+        ),
+      ),
+    );
+  }
+
 }
