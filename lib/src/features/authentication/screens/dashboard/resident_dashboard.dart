@@ -7,6 +7,7 @@ import '../../../../constants/colors.dart';
 import '../../../../constants/image_strings.dart';
 import '../../../../constants/text_strings.dart';
 import '../profile/profile_screen.dart';
+import '../reservation/reservation.dart';
 
 class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
@@ -101,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // Handle button click here
         print('$title button clicked');
         // You can navigate to a new screen or perform any other action on button click
-        Get.to(() => const ComplaintScreen());
+        Get.to(() => const ReservationScreen());
       },
       child: Container(
         decoration: BoxDecoration(

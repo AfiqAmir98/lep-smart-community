@@ -3,8 +3,6 @@ import 'package:get/get.dart';
 import 'package:psm_project/src/constants/sizes.dart';
 import 'package:psm_project/src/constants/text_strings.dart';
 import 'package:psm_project/src/features/authentication/models/complaint_model.dart';
-import 'package:psm_project/src/features/authentication/models/user_model.dart';
-
 import '../../controllers/complaint_controller.dart';
 
 

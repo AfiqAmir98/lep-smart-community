@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:psm_project/src/features/authentication/models/user_model.dart';
 
 import '../features/authentication/models/complaint_model.dart';
+import '../features/authentication/models/reservation_model.dart';
 
 class UserRepository extends GetxController {
   static UserRepository get instance => Get.find();
@@ -31,6 +32,22 @@ class UserRepository extends GetxController {
   createComplaint(ComplaintModel complaint) async{
     await _db.collection("Complaint").add(complaint.toJson()).whenComplete(
           () => Get.snackbar("Success", "A Complaint has been created.",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.green.withOpacity(0.1),
+          colorText: Colors.green),
+    )
+        .catchError((error, stackTrace) {
+      Get.snackbar("Error", "Something went wrong. Try again",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent.withOpacity(0.1),
+          colorText: Colors.red);
+      print(error.toString());
+    });
+  }
+
+  createReservation(ReservationModel reservation) async{
+    await _db.collection("Reservation").add(reservation.toJson()).whenComplete(
+          () => Get.snackbar("Success", "A Reservation has been created.",
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.green.withOpacity(0.1),
           colorText: Colors.green),
