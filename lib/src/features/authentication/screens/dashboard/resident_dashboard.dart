@@ -6,6 +6,7 @@ import 'package:psm_project/src/features/authentication/screens/complaint/compla
 import '../../../../constants/colors.dart';
 import '../../../../constants/image_strings.dart';
 import '../../../../constants/text_strings.dart';
+import '../payment/payment.dart';
 import '../profile/profile_screen.dart';
 import '../reservation/reservation.dart';
 
@@ -102,7 +103,7 @@ class _MyHomePageState extends State<MyHomePage> {
         // Handle button click here
         print('$title button clicked');
         // You can navigate to a new screen or perform any other action on button click
-        Get.to(() => const ReservationScreen());
+        Get.to(() => const PaymentScreen());
       },
       child: Container(
         decoration: BoxDecoration(

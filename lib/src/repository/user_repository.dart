@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:psm_project/src/features/authentication/models/user_model.dart';
 
 import '../features/authentication/models/complaint_model.dart';
+import '../features/authentication/models/payment_model.dart';
 import '../features/authentication/models/reservation_model.dart';
 
 class UserRepository extends GetxController {
@@ -60,6 +61,25 @@ class UserRepository extends GetxController {
       print(error.toString());
     });
   }
+
+  createPayment(PaymentModel payment) async {
+    try {
+      await _db.collection("Payment").add(payment.toJson()).whenComplete(
+            () => Get.snackbar("Success", "Your Receipt has been submitted.",
+            snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.green.withOpacity(0.1),
+            colorText: Colors.green),
+      );
+    } catch (error) {
+      Get.snackbar("Error", "Something went wrong. Try again",
+          snackPosition: SnackPosition.BOTTOM,
+          backgroundColor: Colors.redAccent.withOpacity(0.1),
+          colorText: Colors.red);
+      print("Error creating payment: $error");
+      // Handle the error as needed, such as showing an error message to the user.
+    }
+  }
+
 
   Future<UserModel> getUserDetails(String email) async {
     print('Fetching user details for email: $email');

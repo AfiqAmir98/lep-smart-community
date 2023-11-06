@@ -9,6 +9,7 @@ class ComplaintModel {
   final String description;
   final String dateTime;
   final String status;
+  final String? imageURL;
 
   ComplaintModel({
     this.id,
@@ -17,6 +18,7 @@ class ComplaintModel {
     required this.description,
     required DateTime dateTime,
     required this.status,
+    required this.imageURL,
   }) : dateTime = DateFormat('dd-MM-yyyy HH:mm:ss').format(dateTime); // Format DateTime to String here;
 
   Map<String, dynamic> toJson() {
@@ -26,6 +28,7 @@ class ComplaintModel {
       "Description": description,
       "DateTime": dateTime, // Include formatted date in JSON output
       "Status": status,
+      "ImageURL": imageURL,
     };
   }
 }

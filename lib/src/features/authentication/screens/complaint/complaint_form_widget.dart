@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:psm_project/src/constants/sizes.dart';
 import 'package:psm_project/src/constants/text_strings.dart';
 import 'package:psm_project/src/features/authentication/models/complaint_model.dart';
@@ -16,8 +19,20 @@ class ComplaintFormWidget extends StatefulWidget {
 class _ComplaintWidgetState extends State<ComplaintFormWidget> {
   final controller = Get.put(ComplaintController());
   final _formKey = GlobalKey<FormState>();
+  XFile? _image;
 
   TitleChoice selectedTitleChoice = TitleChoice.Road; // Default role is road
+
+  Future<void> _pickImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      setState(() {
+        _image = pickedFile;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,17 +75,28 @@ class _ComplaintWidgetState extends State<ComplaintFormWidget> {
                   prefixIcon: Icon(Icons.text_fields_outlined)),
             ),
             const SizedBox(height: tFormHeight - 20),
+            ElevatedButton(
+              onPressed: () {
+                _pickImage();
+              },
+              child: Text('Pick Image'),
+            ),
+
+            if (_image != null)
+              Image.file(File(_image!.path)),
+
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
                 onPressed: () {
-                  if (_formKey.currentState!.validate()) {
+                  if (_formKey.currentState!.validate() && _image !=null) {
                     final complaint = ComplaintModel(
                       location: controller.location.text.trim(),
                       description: controller.description.text.trim(),
                       title: selectedTitleChoice.toString().split('.').last, // Convert enum to String
                       dateTime: DateTime.now(),
                       status: 'in progress',
+                      imageURL: _image!.path, // Store the image path in the model
                     );
                     ComplaintController.instance.createComplaint(complaint);
                   }
