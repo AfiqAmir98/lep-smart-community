@@ -92,6 +92,9 @@ flutter:
     - assets/images/user-profile.png
     - assets/images/lep-logo.png
     - assets/images/lep-welcome.png
+    - assets/images/report.png
+    - assets/images/booking.png
+    - assets/images/payment.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

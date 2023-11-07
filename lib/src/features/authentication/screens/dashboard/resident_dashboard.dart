@@ -49,6 +49,11 @@ class _MyHomePageState extends State<MyHomePage> {
             child: Column(
               children: [
                 const SizedBox(height: 50),
+                Image.asset(
+                  'assets/images/lep-welcome.png', // Replace this with the path to your image asset
+                  height: 450, // Set the height of the image as per your requirement
+                  width: 450, // Set the width of the image as per your requirement
+                ),
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 30),
                   title: Text('Hello Resident!', style: Theme.of(context).textTheme.headlineSmall?.copyWith(
@@ -65,28 +70,23 @@ class _MyHomePageState extends State<MyHomePage> {
           Container(
             color: Theme.of(context).primaryColor,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 10),
               decoration: const BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(200)
+                      topLeft: Radius.circular(50)
                   )
               ),
               child: GridView.count(
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
-                crossAxisCount: 2,
-                crossAxisSpacing: 40,
-                mainAxisSpacing: 30,
+                crossAxisCount: 3,
+                crossAxisSpacing: 10,
+                mainAxisSpacing: 50,
                 children: [
-                  clickableItemDashboard('Videos', LineAwesomeIcons.video, Colors.deepOrange),
-                  clickableItemDashboard('Analytics', LineAwesomeIcons.pie_chart, Colors.green),
-                  clickableItemDashboard('Audience', LineAwesomeIcons.users, Colors.purple),
-                  clickableItemDashboard('Comments', LineAwesomeIcons.rocket_chat, Colors.brown),
-                  clickableItemDashboard('Revenue', LineAwesomeIcons.money_bill, Colors.indigo),
-                  clickableItemDashboard('Upload', LineAwesomeIcons.upload, Colors.teal),
-                  clickableItemDashboard('About', LineAwesomeIcons.question, Colors.blue),
-                  clickableItemDashboard('Contact', LineAwesomeIcons.phone, Colors.pinkAccent),
+                  IconButton(onPressed: () => Get.to(() => const ComplaintScreen()), icon: const Image(image: AssetImage(tReport))),
+                  IconButton(onPressed: () => Get.to(() => const ReservationScreen()), icon: const Image(image: AssetImage(tBooking))),
+                  IconButton(onPressed: () => Get.to(() => const PaymentScreen()), icon: const Image(image: AssetImage(tPayment))),
                 ],
               ),
             ),
@@ -96,45 +96,4 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
-
-  GestureDetector clickableItemDashboard(String title, IconData iconData, Color background) {
-    return GestureDetector(
-      onTap: () {
-        // Handle button click here
-        print('$title button clicked');
-        // You can navigate to a new screen or perform any other action on button click
-        Get.to(() => const PaymentScreen());
-      },
-      child: Container(
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(10),
-            boxShadow: [
-              BoxShadow(
-                  offset: const Offset(0, 5),
-                  color: Theme.of(context).primaryColor.withOpacity(.2),
-                  spreadRadius: 2,
-                  blurRadius: 5
-              )
-            ]
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              padding: const EdgeInsets.all(10),
-              decoration: BoxDecoration(
-                color: background,
-                shape: BoxShape.circle,
-              ),
-              child: Icon(iconData, color: Colors.white),
-            ),
-            const SizedBox(height: 8),
-            Text(title.toUpperCase(), style: Theme.of(context).textTheme.titleMedium),
-          ],
-        ),
-      ),
-    );
-  }
-
 }

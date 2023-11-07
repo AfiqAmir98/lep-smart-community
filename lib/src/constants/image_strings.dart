@@ -7,3 +7,7 @@ const String tWelcomeScreenImage = "assets/images/lep-welcome.png";
 const String tGoogleIcon = "assets/images/google-icon.png";
 
 const String tUserProfileImage="assets/images/user-profile.png";
+
+const String tReport="assets/images/report.png";
+const String tBooking="assets/images/booking.png";
+const String tPayment="assets/images/payment.png";
