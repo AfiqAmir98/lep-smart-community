@@ -5,12 +5,14 @@ class PaymentModel {
   final String? imageURL;
   final DateTime dateTime; // Change the type to DateTime
   final String status;
+  final String userEmail;
 
   PaymentModel({
     this.id,
     required this.imageURL,
     required this.dateTime, // Change the parameter type to DateTime
     required this.status,
+    required this.userEmail,
   });
 
   Map<String, dynamic> toJson() {
@@ -18,6 +20,7 @@ class PaymentModel {
       "ImageURL": imageURL,
       "DateTime": DateFormat('dd-MM-yyyy HH:mm:ss').format(dateTime), // Format DateTime to String here in JSON output
       "Status": status,
+      "UserEmail": userEmail,
     };
   }
 }

@@ -1,11 +1,13 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:psm_project/src/constants/sizes.dart';
 import 'package:psm_project/src/constants/text_strings.dart';
 import 'package:psm_project/src/features/authentication/models/complaint_model.dart';
+import 'package:psm_project/src/features/authentication/screens/success.dart';
 import '../../controllers/complaint_controller.dart';
 
 
@@ -88,17 +90,30 @@ class _ComplaintWidgetState extends State<ComplaintFormWidget> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate() && _image !=null) {
+                onPressed: () async {
+                  User? user = FirebaseAuth.instance.currentUser;
+
+                  if (user != null) {
+                    final userEmail = user.email;
                     final complaint = ComplaintModel(
                       location: controller.location.text.trim(),
                       description: controller.description.text.trim(),
-                      title: selectedTitleChoice.toString().split('.').last, // Convert enum to String
+                      title: selectedTitleChoice.toString().split('.').last,
                       dateTime: DateTime.now(),
                       status: 'in progress',
-                      imageURL: _image!.path, // Store the image path in the model
+                      imageURL: _image!.path,
+                      userEmail: userEmail!,
                     );
                     ComplaintController.instance.createComplaint(complaint);
+
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => SuccessPage(),
+                      ),
+                    );
+                  } else {
+                    // Handle the case when the user is not authenticated
+                    print('User not authenticated');
                   }
                 },
                 child: Text(tSubmit.toUpperCase()),

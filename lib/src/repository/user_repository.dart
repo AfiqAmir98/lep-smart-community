@@ -93,6 +93,4 @@ class UserRepository extends GetxController {
     final userData = snapshot.docs.map((e) => UserModel.fromSnapshot(e)).toList();
     return userData;
   }
-
-
 }

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:psm_project/src/constants/sizes.dart';
@@ -5,6 +6,7 @@ import 'package:psm_project/src/constants/text_strings.dart';
 import 'package:psm_project/src/features/authentication/models/reservation_model.dart';
 import '../../controllers/complaint_controller.dart';
 import '../../controllers/reservation_controller.dart';
+import '../success.dart';
 
 class ReservationFormWidget extends StatefulWidget {
   const ReservationFormWidget({Key? key}) : super(key: key);
@@ -96,15 +98,28 @@ class _ReservationWidgetState extends State<ReservationFormWidget> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
+                onPressed: () async {
+                  User? user = FirebaseAuth.instance.currentUser;
+
+                  if (user != null) {
+                    final userEmail = user.email;
                     final reservation = ReservationModel(
                       description: controller.description.text.trim(),
                       location: selectedLocationChoice.toString().split('.').last,
                       dateTime: DateTime.parse(_dateTimeController.text),
                       status: 'in progress',
+                      userEmail: userEmail!,
                     );
                     ReservationController.instance.createReservation(reservation);
+
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => SuccessPage(),
+                      ),
+                    );
+                  } else {
+                    // Handle the case when the user is not authenticated
+                    print('User not authenticated');
                   }
                 },
                 child: Text(tSubmit.toUpperCase()),

@@ -8,6 +8,7 @@ class ReservationModel {
   final String description;
   final String dateTime;
   final String status;
+  final String userEmail;
 
   ReservationModel({
     this.id,
@@ -15,6 +16,7 @@ class ReservationModel {
     required this.description,
     required DateTime dateTime,
     required this.status,
+    required this.userEmail,
   }) : dateTime = DateFormat('dd-MM-yyyy HH:mm:ss').format(dateTime); // Format DateTime to String here;
 
   Map<String, dynamic> toJson() {
@@ -23,6 +25,7 @@ class ReservationModel {
       "Description": description,
       "DateTime": dateTime, // Include formatted date in JSON output
       "Status": status,
+      "UserEmail": userEmail,
     };
   }
 }

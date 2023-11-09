@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:file_picker/file_picker.dart';
@@ -7,6 +8,7 @@ import 'package:psm_project/src/constants/sizes.dart';
 import 'package:psm_project/src/constants/text_strings.dart';
 import '../../controllers/payment_controller.dart';
 import '../../models/payment_model.dart';
+import '../success.dart';
 
 class PaymentFormWidget extends StatefulWidget {
   const PaymentFormWidget({Key? key}) : super(key: key);
@@ -45,7 +47,7 @@ class _PaymentWidgetState extends State<PaymentFormWidget> {
               onPressed: () {
                 _pickImage();
               },
-              child: Text('Pick Image'),
+              child: Text('Upload Receipt'),
             ),
 
             if (_image != null)
@@ -53,14 +55,27 @@ class _PaymentWidgetState extends State<PaymentFormWidget> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate() && _image !=null) {
+                onPressed: () async {
+                  User? user = FirebaseAuth.instance.currentUser;
+
+                  if (user != null) {
+                    final userEmail = user.email;
                     final payment = PaymentModel(
                       dateTime: DateTime.now(),
                       status: 'pending',
-                      imageURL: _image!.path, // Store the image path in the model
+                      imageURL: _image!.path,
+                      userEmail: userEmail!,
                     );
                     PaymentController.instance.createPayment(payment);
+
+                    Navigator.of(context).pushReplacement(
+                      MaterialPageRoute(
+                        builder: (context) => SuccessPage(),
+                      ),
+                    );
+                  } else {
+                    // Handle the case when the user is not authenticated
+                    print('User not authenticated');
                   }
                 },
                 child: Text(tSubmit.toUpperCase()),
