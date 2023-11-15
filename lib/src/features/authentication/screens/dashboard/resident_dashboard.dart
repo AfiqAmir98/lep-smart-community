@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:psm_project/src/features/authentication/screens/complaint/complaint.dart';
+import 'package:psm_project/src/features/authentication/screens/complaint/complaint_button.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../constants/image_strings.dart';
 import '../../../../constants/text_strings.dart';
+import '../../controllers/dashboard_controller.dart';
 import '../payment/payment.dart';
 import '../profile/profile_screen.dart';
 import '../reservation/reservation.dart';
@@ -18,6 +20,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final DashboardController _dashboardController = Get.put(DashboardController());
+
+  @override
+  void initState() {
+    super.initState();
+    _dashboardController.getUserData();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,12 +65,29 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 ListTile(
                   contentPadding: const EdgeInsets.symmetric(horizontal: 30),
-                  title: Text('Hello Resident!', style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: Colors.white
-                  )),
-                  subtitle: Text('Welcome Back', style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      color: Colors.white54
-                  )),
+                  title: Obx(() {
+                    String greeting = 'Hello Resident!';
+
+                    // Check user role and customize greeting
+                    if (DashboardController.instance.userRole.value == 'admin') {
+                      greeting = 'Hello Admin!';
+                    } else if (DashboardController.instance.userRole.value == 'maintenance') {
+                      greeting = 'Hello Maintenance!';
+                    }
+                    // Add more conditions as needed for other roles
+
+                    return Text(greeting, style: Theme.of(context).textTheme.headlineSmall?.copyWith(
+                      color: Colors.white,
+                    ));
+                  }),
+                  subtitle: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Welcome Back', style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        color: Colors.white54,
+                      )),
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 30)
               ],
@@ -84,7 +110,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 50,
                 children: [
-                  IconButton(onPressed: () => Get.to(() => const ComplaintScreen()), icon: const Image(image: AssetImage(tReport))),
+                  IconButton(onPressed: () => Get.to(() => const ComplaintPage()), icon: const Image(image: AssetImage(tReport))),
                   IconButton(onPressed: () => Get.to(() => const ReservationScreen()), icon: const Image(image: AssetImage(tBooking))),
                   IconButton(onPressed: () => Get.to(() => const PaymentScreen()), icon: const Image(image: AssetImage(tPayment))),
                 ],
