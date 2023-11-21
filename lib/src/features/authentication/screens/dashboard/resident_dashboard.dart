@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:psm_project/src/features/authentication/screens/complaint/complaint.dart';
 import 'package:psm_project/src/features/authentication/screens/complaint/complaint_button.dart';
+import 'package:psm_project/src/features/authentication/screens/signup/sign_up.dart';
 
 import '../../../../constants/colors.dart';
 import '../../../../constants/image_strings.dart';
@@ -25,11 +26,22 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _dashboardController.getUserData();
+    _initializeData();
+  }
+
+  // Initialize data, including user role
+  Future<void> _initializeData() async {
+    await _dashboardController.getUserData();
+    // You can add additional initialization steps here if needed
+    print("User Role: ${_dashboardController.userRole.value}");
+    // Force a re-build to check if the visibility updates
+    setState(() {});
   }
 
   @override
   Widget build(BuildContext context) {
+    print("User Role (Build Method): ${_dashboardController.userRole.value}");
+
     return Scaffold(
       appBar: AppBar(
         leading: const Icon(Icons.menu, color: Colors.black,),
@@ -110,9 +122,17 @@ class _MyHomePageState extends State<MyHomePage> {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 50,
                 children: [
-                  IconButton(onPressed: () => Get.to(() => const ComplaintPage()), icon: const Image(image: AssetImage(tReport))),
+                  IconButton(onPressed: () => Get.to(() => const ComplaintPage()), icon: const Image(image: AssetImage(tReport)),),
                   IconButton(onPressed: () => Get.to(() => const ReservationScreen()), icon: const Image(image: AssetImage(tBooking))),
                   IconButton(onPressed: () => Get.to(() => const PaymentScreen()), icon: const Image(image: AssetImage(tPayment))),
+                  Visibility(
+                    // Use the Visibility widget to conditionally hide the button
+                    visible: _dashboardController.userRole.value == 'admin',
+                    child: IconButton(
+                      onPressed: () => Get.to(() => const SignUpScreen()),
+                      icon: const Image(image: AssetImage(tRegister)),
+                    ),
+                  ),
                 ],
               ),
             ),

@@ -10,14 +10,13 @@ class DashboardController extends GetxController {
 
   RxString userRole = ''.obs; // Observable for user role
 
-  getUserData() {
+  Future<void> getUserData() async {
     final email = _authRepo.firebaseUser.value?.email;
     if (email != null) {
-      _userRepo.getUserDetails(email).then((userData) {
-        if (userData != null) {
-          userRole.value = userData.role; // Assign user role to observable
-        }
-      });
+      final userData = await _userRepo.getUserDetails(email);
+      if (userData != null) {
+        userRole.value = userData.role;
+      }
     } else {
       Get.snackbar("Error", "Login to Continue");
     }
