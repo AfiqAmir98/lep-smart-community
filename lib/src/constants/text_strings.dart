@@ -46,6 +46,7 @@ const String tDashboardHeading = "Maintenance App";
 
 const String tProfile = "Profile";
 const String tEditProfile = "Edit Profile";
+const String tProfileList = "Profile List";
 const String tLogoutDialogHeading = "Logout";
 const String tProfileHeading = "LEP Smart Community";
 const String tProfileSubHeading = "LEP Smart Community";
@@ -60,3 +61,5 @@ const String tJoined = "Joined";
 const String tJoinedAt = "31 October 2023";
 
 const String tComplaintHeader = "Complaint Form";
+const String tReservationHeader = "Reservation Form";
+const String tPaymentHeader = "Payment Form";

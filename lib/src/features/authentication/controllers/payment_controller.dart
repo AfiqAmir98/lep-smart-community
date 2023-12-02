@@ -16,4 +16,8 @@ class PaymentController extends GetxController {
   Future <void> createPayment(PaymentModel payment) async {
     await userRepo.createPayment(payment);
   }
+
+  Future<List<PaymentModel>> allPayment() async {
+    return await userRepo.allPayment();
+  }
 }

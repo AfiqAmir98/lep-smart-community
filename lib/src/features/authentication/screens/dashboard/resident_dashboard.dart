@@ -122,7 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 50,
                 children: [
-                  IconButton(onPressed: () => Get.to(() => const ComplaintPage()), icon: const Image(image: AssetImage(tReport)),),
+                  IconButton(onPressed: () => Get.to(() => const ComplaintScreen()), icon: const Image(image: AssetImage(tReport)),),
                   IconButton(onPressed: () => Get.to(() => const ReservationScreen()), icon: const Image(image: AssetImage(tBooking))),
                   IconButton(onPressed: () => Get.to(() => const PaymentScreen()), icon: const Image(image: AssetImage(tPayment))),
                   Visibility(

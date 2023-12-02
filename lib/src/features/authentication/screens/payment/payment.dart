@@ -20,7 +20,7 @@ class PaymentScreen extends StatelessWidget {
               children: const [
                 PaymentHeaderWidget(
                   image: tWelcomeScreenImage,
-                  title: tComplaintHeader,
+                  title: tPaymentHeader,
                   subTitle: tSignUpSubtitle,
                   imageHeight: 0.15,
                 ),

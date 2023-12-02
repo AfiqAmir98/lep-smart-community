@@ -28,4 +28,26 @@ class ReservationModel {
       "UserEmail": userEmail,
     };
   }
+
+  factory ReservationModel.fromSnapshot(DocumentSnapshot<Map<String, dynamic>> document) {
+    final data = document.data()!;
+    return ReservationModel(
+      id: document.id,
+      location: data["Location"] ?? "",
+      description: data["Description"] ?? "",
+      dateTime: _parseDateTime(data["DateTime"]),
+      status: data["Status"] ?? "",
+      userEmail: data["UserEmail"] ?? "",
+    );
+  }
+
+  static DateTime _parseDateTime(String dateString) {
+    try {
+      return DateTime.parse(dateString ?? ""); // Handle null or empty date string
+    } catch (e) {
+      // Handle the parsing error, you might want to return a default value or throw an exception.
+      print("Error parsing date: $e");
+      return DateTime.now(); // Default value, you can adjust this as needed.
+    }
+  }
 }

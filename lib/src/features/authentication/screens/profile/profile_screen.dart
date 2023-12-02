@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:psm_project/src/constants/image_strings.dart';
+import 'package:psm_project/src/features/authentication/screens/profile/list_profile_screen.dart';
 import 'package:psm_project/src/features/authentication/screens/profile/update_profile_screen.dart';
 import 'package:psm_project/src/features/authentication/screens/profile/widget/profile_menu.dart';
 
@@ -9,9 +10,33 @@ import '../../../../constants/colors.dart';
 import '../../../../constants/sizes.dart';
 import '../../../../constants/text_strings.dart';
 import '../../../../repository/authentication_repository/authentication_repository.dart';
+import '../../controllers/dashboard_controller.dart';
+import '../complaint/list_complaint_screen.dart';
+import '../payment/list_payment_screen.dart';
+import '../reservation/list_reservation_screen.dart';
+import '../reservation/reservation.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ProfileScreen> createState() => _ProfileState();
+}
+
+class _ProfileState extends State<ProfileScreen> {
+  final DashboardController _dashboardController = Get.put(DashboardController());
+
+  @override
+  void initState() {
+    super.initState();
+    _initializeData();
+  }
+
+  // Initialize data, including user role
+  Future<void> _initializeData() async {
+    await _dashboardController.getUserData();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,24 +83,15 @@ class ProfileScreen extends StatelessWidget {
               Text(tProfileSubHeading, style: Theme.of(context).textTheme.bodyText2),
               const SizedBox(height: 20),
 
-              /// -- BUTTON
-              SizedBox(
-                width: 200,
-                child: ElevatedButton(
-                  onPressed: () => Get.to(() => const UpdateProfileScreen()),
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: tPrimaryColor, side: BorderSide.none, shape: const StadiumBorder()),
-                  child: const Text(tEditProfile, style: TextStyle(color: tDarkColor)),
-                ),
-              ),
-              const SizedBox(height: 30),
-              const Divider(),
-              const SizedBox(height: 10),
-
               /// -- MENU
-              ProfileMenuWidget(title: "Settings", icon: LineAwesomeIcons.cog, onPress: () {}),
-              ProfileMenuWidget(title: "Billing Details", icon: LineAwesomeIcons.wallet, onPress: () {}),
-              ProfileMenuWidget(title: "User Management", icon: LineAwesomeIcons.user_check, onPress: () {}),
+              ProfileMenuWidget(title: "Reports", icon: LineAwesomeIcons.list, onPress: () => Get.to(() => const ComplaintListScreen()),),
+              ProfileMenuWidget(title: "Billing Details", icon: LineAwesomeIcons.wallet, onPress: () => Get.to(() => const PaymentListScreen()),),
+              ProfileMenuWidget(title: "Reservation", icon: LineAwesomeIcons.calendar, onPress: () => Get.to(() => const ReservationListScreen()),),
+              Visibility(
+                // Use the Visibility widget to conditionally hide the button
+                visible: _dashboardController.userRole.value == 'admin',
+                child: ProfileMenuWidget(title: "User Management", icon: LineAwesomeIcons.user_check, onPress: () => Get.to(() => const ProfileListScreen()),),
+              ),
               const Divider(),
               const SizedBox(height: 10),
               ProfileMenuWidget(title: "Information", icon: LineAwesomeIcons.info, onPress: () {}),

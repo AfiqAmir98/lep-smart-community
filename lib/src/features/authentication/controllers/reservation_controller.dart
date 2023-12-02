@@ -22,4 +22,8 @@ class ReservationController extends GetxController {
   Future <void> createReservation(ReservationModel reservation) async {
     await userRepo.createReservation(reservation);
   }
+
+  Future<List<ReservationModel>> getAllReservation() async {
+    return await userRepo.allReservation();
+  }
 }

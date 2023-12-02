@@ -10,7 +10,6 @@ import '../features/authentication/models/reservation_model.dart';
 
 class UserRepository extends GetxController {
   static UserRepository get instance => Get.find();
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   final _db = FirebaseFirestore.instance;
 
@@ -46,6 +45,12 @@ class UserRepository extends GetxController {
     });
   }
 
+  Future<List<ComplaintModel>> allComplaint() async {
+    final snapshot = await _db.collection("Complaint").get();
+    final complaintData = snapshot.docs.map((e) => ComplaintModel.fromSnapshot(e)).toList();
+    return complaintData;
+  }
+
   createReservation(ReservationModel reservation) async{
     await _db.collection("Reservation").add(reservation.toJson()).whenComplete(
           () => Get.snackbar("Success", "A Reservation has been created.",
@@ -60,6 +65,12 @@ class UserRepository extends GetxController {
           colorText: Colors.red);
       print(error.toString());
     });
+  }
+
+  Future<List<ReservationModel>> allReservation() async {
+    final snapshot = await _db.collection("Reservation").get();
+    final reservationData = snapshot.docs.map((e) => ReservationModel.fromSnapshot(e)).toList();
+    return reservationData;
   }
 
   createPayment(PaymentModel payment) async {
@@ -80,6 +91,12 @@ class UserRepository extends GetxController {
     }
   }
 
+  Future<List<PaymentModel>> allPayment() async {
+    final snapshot = await _db.collection("Payment").get();
+    final paymentData = snapshot.docs.map((e) => PaymentModel.fromSnapshot(e)).toList();
+    return paymentData;
+  }
+
 
   Future<UserModel> getUserDetails(String email) async {
     print('Fetching user details for email: $email');
@@ -88,9 +105,24 @@ class UserRepository extends GetxController {
     return userData;
   }
 
+  Future<UserModel> getUserDetailsById(String userId) async {
+    print('Fetching user details for ID: $userId');
+    final snapshot = await _db.collection("User").doc(userId).get();
+    final userData = UserModel.fromSnapshot(snapshot);
+    return userData;
+  }
+
   Future<List<UserModel>> allUser() async {
     final snapshot = await _db.collection("User").get();
     final userData = snapshot.docs.map((e) => UserModel.fromSnapshot(e)).toList();
     return userData;
+  }
+
+  Future<void> updateUserRecord(UserModel user) async {
+    await _db.collection("User").doc(user.id).update(user.toJson());
+  }
+
+  deleteUser(String userId) async {
+    await _db.collection("User").doc(userId).delete();
   }
 }

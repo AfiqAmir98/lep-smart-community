@@ -21,7 +21,7 @@ class ReservationScreen extends StatelessWidget {
               children: const [
                 ReservationHeaderWidget(
                   image: tWelcomeScreenImage,
-                  title: tComplaintHeader,
+                  title: tReservationHeader,
                   subTitle: tSignUpSubtitle,
                   imageHeight: 0.15,
                 ),

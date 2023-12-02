@@ -19,4 +19,8 @@ class ComplaintController extends GetxController {
   Future <void> createComplaint(ComplaintModel complaint) async {
     await userRepo.createComplaint(complaint);
   }
+
+  Future<List<ComplaintModel>> getAllComplaint() async {
+    return await userRepo.allComplaint();
+  }
 }
