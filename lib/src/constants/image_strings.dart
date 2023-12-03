@@ -12,3 +12,4 @@ const String tReport="assets/images/report.png";
 const String tBooking="assets/images/booking.png";
 const String tPayment="assets/images/payment.png";
 const String tRegister="assets/images/register.png";
+const String tComplaint="assets/images/complaint-box.png";

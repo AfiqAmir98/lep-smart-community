@@ -4,22 +4,22 @@ import 'package:intl/intl.dart';
 class PaymentModel {
   final String? id;
   final String? imageURL;
-  final String dateTime; // Change the type to DateTime
+  final DateTime dateTime; // Change the type to DateTime
   final String status;
   final String userEmail;
 
   PaymentModel({
     this.id,
     required this.imageURL,
-    required DateTime dateTime, // Change the parameter type to DateTime
+    required this.dateTime, // Update the type to DateTime
     required this.status,
     required this.userEmail,
-  }): dateTime = DateFormat('dd-MM-yyyy HH:mm:ss').format(dateTime); // Format DateTime to String here;
+  }); // Format DateTime to String here;
 
   Map<String, dynamic> toJson() {
     return {
       "ImageURL": imageURL,
-      "DateTime": dateTime, // Format DateTime to String here in JSON output
+      "DateTime": DateFormat('dd-MM-yyyy HH:mm:ss').format(dateTime),
       "Status": status,
       "UserEmail": userEmail,
     };

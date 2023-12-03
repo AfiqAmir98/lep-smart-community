@@ -84,9 +84,22 @@ class _ProfileState extends State<ProfileScreen> {
               const SizedBox(height: 20),
 
               /// -- MENU
-              ProfileMenuWidget(title: "Reports", icon: LineAwesomeIcons.list, onPress: () => Get.to(() => const ComplaintListScreen()),),
-              ProfileMenuWidget(title: "Billing Details", icon: LineAwesomeIcons.wallet, onPress: () => Get.to(() => const PaymentListScreen()),),
-              ProfileMenuWidget(title: "Reservation", icon: LineAwesomeIcons.calendar, onPress: () => Get.to(() => const ReservationListScreen()),),
+              Visibility(
+                // Use the Visibility widget to conditionally hide the button
+                visible: _dashboardController.userRole.value == 'admin' ||
+                    _dashboardController.userRole.value == 'maintenance',
+                child: ProfileMenuWidget(title: "Reports", icon: LineAwesomeIcons.list, onPress: () => Get.to(() => const ComplaintListScreen()),),
+              ),
+              Visibility(
+                // Use the Visibility widget to conditionally hide the button
+                visible: _dashboardController.userRole.value == 'admin',
+                child: ProfileMenuWidget(title: "Billing Details", icon: LineAwesomeIcons.wallet, onPress: () => Get.to(() => const PaymentListScreen()),),
+              ),
+              Visibility(
+                // Use the Visibility widget to conditionally hide the button
+                visible: _dashboardController.userRole.value == 'admin',
+                child: ProfileMenuWidget(title: "Reservation", icon: LineAwesomeIcons.calendar, onPress: () => Get.to(() => const ReservationListScreen()),),
+              ),
               Visibility(
                 // Use the Visibility widget to conditionally hide the button
                 visible: _dashboardController.userRole.value == 'admin',

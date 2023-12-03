@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:psm_project/src/features/authentication/controllers/profile_controller.dart';
 import 'package:psm_project/src/features/authentication/models/user_model.dart';
+import 'package:psm_project/src/features/authentication/screens/complaint/update_complaint_screen.dart';
+import 'package:psm_project/src/features/authentication/screens/payment/update_payment_screen.dart';
 import 'package:psm_project/src/features/authentication/screens/profile/update_profile_screen.dart';
 
 import '../../../../constants/colors.dart';
@@ -37,23 +40,32 @@ class PaymentListScreen extends StatelessWidget {
                         itemCount: snapshot.data!.length,
                         itemBuilder: (c, index){
                           // Wrap ListTile with GestureDetector
-                          return Column(
-                            children: [
-                              ListTile(
-                                iconColor: Colors.blue,
-                                tileColor: Colors.blue.withOpacity(0.1),
-                                leading: const Icon(LineAwesomeIcons.comment),
-                                title: Text("Status: ${snapshot.data![index].status}"),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(snapshot.data![index].dateTime),
-                                    Text(snapshot.data![index].userEmail),
-                                  ],
-                                ),
-                              ),
-                              const SizedBox(height: 10)
-                            ],
+                          return GestureDetector(
+                              onTap: () async {
+                                // Fetch the detailed user data based on the selected user's ID
+                                PaymentModel detailedPayment = await controller.getPaymentDetailsById(snapshot.data![index].id!);
+
+                                // Navigate to the UpdateProfileScreen with the fetched user data
+                                Get.to(() => UpdatePaymentScreen(payment: detailedPayment));
+                              },
+                              child: Column(
+                                children: [
+                                  ListTile(
+                                    iconColor: Colors.blue,
+                                    tileColor: Colors.blue.withOpacity(0.1),
+                                    leading: const Icon(LineAwesomeIcons.comment),
+                                    title: Text("Status: ${snapshot.data![index].status}"),
+                                    subtitle: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text(DateFormat('dd-MM-yyyy HH:mm:ss').format(snapshot.data![index].dateTime)),
+                                        Text(snapshot.data![index].userEmail),
+                                      ],
+                                    ),
+                                  ),
+                                  const SizedBox(height: 10)
+                                ],
+                              )
                           );
                         }
                     );

@@ -22,7 +22,7 @@ class ComplaintListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(onPressed: () => Get.back(), icon: const Icon(LineAwesomeIcons.angle_left)),
-        title: Text(tProfileList, style: Theme.of(context).textTheme.headline4),
+        title: Text('Complaint List', style: Theme.of(context).textTheme.headline4),
       ),
       body: SingleChildScrollView(
         child: Container(

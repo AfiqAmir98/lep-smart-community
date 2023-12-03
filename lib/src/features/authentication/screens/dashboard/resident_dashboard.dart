@@ -132,7 +132,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         _dashboardController.userRole.value == 'maintenance',
                     child: IconButton(
                       onPressed: () => Get.to(() => const ComplaintListScreen()),
-                      icon: const Image(image: AssetImage(tRegister)),
+                      icon: const Image(image: AssetImage(tComplaint)),
                     ),
                   ),
                   Visibility(

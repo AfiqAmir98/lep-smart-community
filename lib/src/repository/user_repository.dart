@@ -103,6 +103,35 @@ class UserRepository extends GetxController {
     return reservationData;
   }
 
+  Future<ReservationModel?> getReservationDetails(String? id) async {
+    if (id == null) {
+      return null;
+    }
+    print('Fetching reservation details for id: $id');
+    final snapshot = await _db.collection("Reservation").doc(id).get();
+    if (snapshot.exists) {
+      return ReservationModel.fromSnapshot(snapshot);
+    } else {
+      return null;
+    }
+  }
+
+
+  Future<ReservationModel> getReservationDetailsById(String id) async {
+    print('Fetching user details for ID: $id');
+    final snapshot = await _db.collection("Reservation").doc(id).get();
+    final reservationData = ReservationModel.fromSnapshot(snapshot);
+    return reservationData;
+  }
+
+  Future<void> updateReservationRecord(ReservationModel reservation) async {
+    await _db.collection("Reservation").doc(reservation.id).update(reservation.toJson());
+  }
+
+  deleteReservation(String id) async {
+    await _db.collection("Reservation").doc(id).delete();
+  }
+
   //Payment
   createPayment(PaymentModel payment) async {
     try {
@@ -126,6 +155,35 @@ class UserRepository extends GetxController {
     final snapshot = await _db.collection("Payment").get();
     final paymentData = snapshot.docs.map((e) => PaymentModel.fromSnapshot(e)).toList();
     return paymentData;
+  }
+
+  Future<PaymentModel?> getPaymentDetails(String? id) async {
+    if (id == null) {
+      return null;
+    }
+    print('Fetching payment details for id: $id');
+    final snapshot = await _db.collection("Payment").doc(id).get();
+    if (snapshot.exists) {
+      return PaymentModel.fromSnapshot(snapshot);
+    } else {
+      return null;
+    }
+  }
+
+
+  Future<PaymentModel> getPaymentDetailsById(String id) async {
+    print('Fetching user details for ID: $id');
+    final snapshot = await _db.collection("Payment").doc(id).get();
+    final paymentData = PaymentModel.fromSnapshot(snapshot);
+    return paymentData;
+  }
+
+  Future<void> updatePaymentRecord(PaymentModel payment) async {
+    await _db.collection("Payment").doc(payment.id).update(payment.toJson());
+  }
+
+  deletePayment(String id) async {
+    await _db.collection("Payment").doc(id).delete();
   }
 
 

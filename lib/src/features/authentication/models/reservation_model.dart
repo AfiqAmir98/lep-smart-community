@@ -6,7 +6,7 @@ class ReservationModel {
   final String? id;
   final String location;
   final String description;
-  final String dateTime;
+  final DateTime dateTime; // Change the type to DateTime
   final String status;
   final String userEmail;
 
@@ -14,16 +14,16 @@ class ReservationModel {
     this.id,
     required this.location,
     required this.description,
-    required DateTime dateTime,
+    required this.dateTime, // Update the type to DateTime
     required this.status,
     required this.userEmail,
-  }) : dateTime = DateFormat('dd-MM-yyyy HH:mm:ss').format(dateTime); // Format DateTime to String here;
+  });
 
   Map<String, dynamic> toJson() {
     return {
       "Location": location,
       "Description": description,
-      "DateTime": dateTime, // Include formatted date in JSON output
+      "DateTime": DateFormat('dd-MM-yyyy HH:mm:ss').format(dateTime),
       "Status": status,
       "UserEmail": userEmail,
     };
