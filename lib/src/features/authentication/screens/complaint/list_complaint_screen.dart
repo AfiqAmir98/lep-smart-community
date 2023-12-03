@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:psm_project/src/features/authentication/controllers/profile_controller.dart';
 import 'package:psm_project/src/features/authentication/models/user_model.dart';
+import 'package:psm_project/src/features/authentication/screens/complaint/update_complaint_screen.dart';
 import 'package:psm_project/src/features/authentication/screens/profile/update_profile_screen.dart';
 
 import '../../../../constants/colors.dart';
@@ -20,7 +22,7 @@ class ComplaintListScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(onPressed: () => Get.back(), icon: const Icon(LineAwesomeIcons.angle_left)),
-        title: Text('Complaint List', style: Theme.of(context).textTheme.headline4),
+        title: Text(tProfileList, style: Theme.of(context).textTheme.headline4),
       ),
       body: SingleChildScrollView(
         child: Container(
@@ -35,7 +37,15 @@ class ComplaintListScreen extends StatelessWidget {
                         itemCount: snapshot.data!.length,
                         itemBuilder: (c, index){
                           // Wrap ListTile with GestureDetector
-                          return Column(
+                          return GestureDetector(
+                              onTap: () async {
+                                // Fetch the detailed user data based on the selected user's ID
+                                ComplaintModel detailedComplaint = await controller.getComplaintDetailsById(snapshot.data![index].id!);
+
+                                // Navigate to the UpdateProfileScreen with the fetched user data
+                                Get.to(() => UpdateComplaintScreen(complaint: detailedComplaint));
+                              },
+                              child: Column(
                                 children: [
                                   ListTile(
                                     iconColor: Colors.blue,
@@ -45,14 +55,22 @@ class ComplaintListScreen extends StatelessWidget {
                                     subtitle: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
-                                        Text(snapshot.data![index].dateTime),
+                                        Text(
+                                          snapshot.data![index].status,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16, // Set the desired font size
+                                          ),
+                                        ),
+                                        Text(DateFormat('dd-MM-yyyy HH:mm:ss').format(snapshot.data![index].dateTime)),
                                         Text(snapshot.data![index].userEmail),
                                       ],
                                     ),
                                   ),
                                   const SizedBox(height: 10)
                                 ],
-                              );
+                              )
+                          );
                         }
                     );
                   } else if (snapshot.hasError){

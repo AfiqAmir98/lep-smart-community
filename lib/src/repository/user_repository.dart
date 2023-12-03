@@ -28,7 +28,7 @@ class UserRepository extends GetxController {
       print(error.toString());
     });
   }
-
+//Complaint
   createComplaint(ComplaintModel complaint) async{
     await _db.collection("Complaint").add(complaint.toJson()).whenComplete(
           () => Get.snackbar("Success", "A Complaint has been created.",
@@ -51,6 +51,36 @@ class UserRepository extends GetxController {
     return complaintData;
   }
 
+  Future<ComplaintModel?> getComplaintDetails(String? id) async {
+    if (id == null) {
+      return null;
+    }
+    print('Fetching complaint details for id: $id');
+    final snapshot = await _db.collection("Complaint").doc(id).get();
+    if (snapshot.exists) {
+      return ComplaintModel.fromSnapshot(snapshot);
+    } else {
+      return null;
+    }
+  }
+
+
+  Future<ComplaintModel> getComplaintDetailsById(String id) async {
+    print('Fetching user details for ID: $id');
+    final snapshot = await _db.collection("Complaint").doc(id).get();
+    final complaintData = ComplaintModel.fromSnapshot(snapshot);
+    return complaintData;
+  }
+
+  Future<void> updateComplaintRecord(ComplaintModel complaint) async {
+    await _db.collection("Complaint").doc(complaint.id).update(complaint.toJson());
+  }
+
+  deleteComplaint(String id) async {
+    await _db.collection("Complaint").doc(id).delete();
+  }
+
+  //Reservation
   createReservation(ReservationModel reservation) async{
     await _db.collection("Reservation").add(reservation.toJson()).whenComplete(
           () => Get.snackbar("Success", "A Reservation has been created.",
@@ -73,6 +103,7 @@ class UserRepository extends GetxController {
     return reservationData;
   }
 
+  //Payment
   createPayment(PaymentModel payment) async {
     try {
       await _db.collection("Payment").add(payment.toJson()).whenComplete(
@@ -98,6 +129,7 @@ class UserRepository extends GetxController {
   }
 
 
+  //Profile
   Future<UserModel> getUserDetails(String email) async {
     print('Fetching user details for email: $email');
     final snapshot = await _db.collection("User").where("Email", isEqualTo: email).get();

@@ -7,33 +7,30 @@ class ComplaintModel {
   final String title;
   final String location;
   final String description;
-  final String dateTime;
+  final DateTime dateTime; // Change the type to DateTime
   final String status;
   final String? imageURL;
   final String userEmail;
-  final String? resultImage;
 
   ComplaintModel({
     this.id,
     required this.title,
     required this.location,
     required this.description,
-    required DateTime dateTime,
+    required this.dateTime, // Update the type to DateTime
     required this.status,
     this.imageURL,
-    this.resultImage,
     required this.userEmail,
-  }) : dateTime = DateFormat('dd-MM-yyyy HH:mm:ss').format(dateTime); // Format DateTime to String here;
+  });
 
   Map<String, dynamic> toJson() {
     return {
       "TitleChoice": title,
       "Location": location,
       "Description": description,
-      "DateTime": dateTime, // Include formatted date in JSON output
+      "DateTime": DateFormat('dd-MM-yyyy HH:mm:ss').format(dateTime),
       "Status": status,
       "ImageURL": imageURL,
-      "ResultImage": resultImage,
       "UserEmail": userEmail,
     };
   }
@@ -42,24 +39,22 @@ class ComplaintModel {
     final data = document.data()!;
     return ComplaintModel(
       id: document.id,
-      title: data["TitleChoice"] ?? "", // Handle null value here
+      title: data["TitleChoice"] ?? "",
       location: data["Location"] ?? "",
       description: data["Description"] ?? "",
       dateTime: _parseDateTime(data["DateTime"]),
       status: data["Status"] ?? "",
       imageURL: data["ImageURL"] ?? "",
-      resultImage: data["ResultImage"] ?? "",
       userEmail: data["UserEmail"] ?? "",
     );
   }
 
   static DateTime _parseDateTime(String dateString) {
     try {
-      return DateTime.parse(dateString ?? ""); // Handle null or empty date string
+      return DateTime.parse(dateString ?? "");
     } catch (e) {
-      // Handle the parsing error, you might want to return a default value or throw an exception.
       print("Error parsing date: $e");
-      return DateTime.now(); // Default value, you can adjust this as needed.
+      return DateTime.now();
     }
   }
 }

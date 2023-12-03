@@ -9,6 +9,7 @@ import '../../../../constants/colors.dart';
 import '../../../../constants/image_strings.dart';
 import '../../../../constants/text_strings.dart';
 import '../../controllers/dashboard_controller.dart';
+import '../complaint/list_complaint_screen.dart';
 import '../payment/payment.dart';
 import '../profile/profile_screen.dart';
 import '../reservation/reservation.dart';
@@ -125,6 +126,15 @@ class _MyHomePageState extends State<MyHomePage> {
                   IconButton(onPressed: () => Get.to(() => const ComplaintScreen()), icon: const Image(image: AssetImage(tReport)),),
                   IconButton(onPressed: () => Get.to(() => const ReservationScreen()), icon: const Image(image: AssetImage(tBooking))),
                   IconButton(onPressed: () => Get.to(() => const PaymentScreen()), icon: const Image(image: AssetImage(tPayment))),
+                  Visibility(
+                    // Use the Visibility widget to conditionally hide the button
+                    visible: _dashboardController.userRole.value == 'admin' ||
+                        _dashboardController.userRole.value == 'maintenance',
+                    child: IconButton(
+                      onPressed: () => Get.to(() => const ComplaintListScreen()),
+                      icon: const Image(image: AssetImage(tRegister)),
+                    ),
+                  ),
                   Visibility(
                     // Use the Visibility widget to conditionally hide the button
                     visible: _dashboardController.userRole.value == 'admin',
