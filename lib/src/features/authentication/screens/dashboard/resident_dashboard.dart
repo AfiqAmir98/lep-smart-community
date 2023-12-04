@@ -92,14 +92,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     // Add more conditions as needed for other roles
 
                     return Text(greeting, style: Theme.of(context).textTheme.headlineSmall?.copyWith(
-                      color: Colors.white,
+                      color: Colors.black,
                     ));
                   }),
                   subtitle: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text('Welcome Back', style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                        color: Colors.white54,
+                        color: Colors.black,
                       )),
                     ],
                   ),
@@ -127,14 +127,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 children: [
                   IconButton(onPressed: () => Get.to(() => const ComplaintScreen()), icon: const Image(image: AssetImage(tReport)),),
                   IconButton(onPressed: () => Get.to(() => const ReservationScreen()), icon: const Image(image: AssetImage(tBooking))),
-                  IconButton(onPressed: () => Get.to(() => const PaymentScreen()), icon: const Image(image: AssetImage(tPayment))),
                   Visibility(
                     // Use the Visibility widget to conditionally hide the button
                     visible: _dashboardController.userRole.value == 'admin' ||
-                        _dashboardController.userRole.value == 'maintenance',
+                        _dashboardController.userRole.value == 'resident',
                     child: IconButton(
-                      onPressed: () => Get.to(() => const ComplaintListScreen()),
-                      icon: const Image(image: AssetImage(tComplaint)),
+                      onPressed: () => Get.to(() => const PaymentScreen()),
+                      icon: const Image(image: AssetImage(tPayment)),
                     ),
                   ),
                   Visibility(

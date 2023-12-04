@@ -12,8 +12,11 @@ import '../../../../constants/text_strings.dart';
 import '../../../../repository/authentication_repository/authentication_repository.dart';
 import '../../controllers/dashboard_controller.dart';
 import '../complaint/list_complaint_screen.dart';
+import '../complaint/list_complaint_view.dart';
 import '../payment/list_payment_screen.dart';
+import '../payment/list_payment_view.dart';
 import '../reservation/list_reservation_screen.dart';
+import '../reservation/list_reservation_view.dart';
 import '../reservation/reservation.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -84,22 +87,9 @@ class _ProfileState extends State<ProfileScreen> {
               const SizedBox(height: 20),
 
               /// -- MENU
-              Visibility(
-                // Use the Visibility widget to conditionally hide the button
-                visible: _dashboardController.userRole.value == 'admin' ||
-                    _dashboardController.userRole.value == 'maintenance',
-                child: ProfileMenuWidget(title: "Reports", icon: LineAwesomeIcons.list, onPress: () => Get.to(() => const ComplaintListScreen()),),
-              ),
-              Visibility(
-                // Use the Visibility widget to conditionally hide the button
-                visible: _dashboardController.userRole.value == 'admin',
-                child: ProfileMenuWidget(title: "Billing Details", icon: LineAwesomeIcons.wallet, onPress: () => Get.to(() => const PaymentListScreen()),),
-              ),
-              Visibility(
-                // Use the Visibility widget to conditionally hide the button
-                visible: _dashboardController.userRole.value == 'admin',
-                child: ProfileMenuWidget(title: "Reservation", icon: LineAwesomeIcons.calendar, onPress: () => Get.to(() => const ReservationListScreen()),),
-              ),
+              ProfileMenuWidget(title: "Reports", icon: LineAwesomeIcons.list, onPress: () => Get.to(() => const ComplaintListViewScreen()),),
+              ProfileMenuWidget(title: "Billing Details", icon: LineAwesomeIcons.wallet, onPress: () => Get.to(() => const PaymentListViewScreen()),),
+              ProfileMenuWidget(title: "Reservation", icon: LineAwesomeIcons.calendar, onPress: () => Get.to(() => const ReservationListViewScreen()),),
               Visibility(
                 // Use the Visibility widget to conditionally hide the button
                 visible: _dashboardController.userRole.value == 'admin',

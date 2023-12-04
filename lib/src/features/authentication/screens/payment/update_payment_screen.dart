@@ -14,7 +14,6 @@ import '../../models/payment_model.dart';
 
 class UpdatePaymentScreen extends StatelessWidget {
   final PaymentModel payment;
-
   const UpdatePaymentScreen({Key? key, required this.payment}) : super(key: key);
 
   @override
