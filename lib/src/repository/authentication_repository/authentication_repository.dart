@@ -15,6 +15,8 @@ import 'exception/login_with_email_and_pssword_failure.dart';
 class AuthenticationRepository extends GetxController {
   static AuthenticationRepository get instance => Get.find();
 
+  User? get currentUser => _auth.currentUser;
+
 
   //Variables
   final _auth = FirebaseAuth.instance;
@@ -25,7 +27,6 @@ class AuthenticationRepository extends GetxController {
   //Will be load when app launches this func will be called and set the firebaseUser state
   @override
   void onReady() {
-    Future.delayed(const Duration(seconds: 6));
     firebaseUser = Rx<User?>(_auth.currentUser);
     firebaseUser.bindStream(_auth.userChanges());
     ever(firebaseUser, _setInitialScreen);

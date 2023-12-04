@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:psm_project/src/features/authentication/screens/complaint/complaint.dart';
 import 'package:psm_project/src/features/authentication/screens/complaint/complaint_button.dart';
+import 'package:psm_project/src/features/authentication/screens/payment/list_payment_screen.dart';
 import 'package:psm_project/src/features/authentication/screens/signup/sign_up.dart';
 
 import '../../../../constants/colors.dart';
@@ -12,6 +13,7 @@ import '../../controllers/dashboard_controller.dart';
 import '../complaint/list_complaint_screen.dart';
 import '../payment/payment.dart';
 import '../profile/profile_screen.dart';
+import '../reservation/list_reservation_screen.dart';
 import '../reservation/reservation.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -133,6 +135,22 @@ class _MyHomePageState extends State<MyHomePage> {
                     child: IconButton(
                       onPressed: () => Get.to(() => const ComplaintListScreen()),
                       icon: const Image(image: AssetImage(tComplaint)),
+                    ),
+                  ),
+                  Visibility(
+                    // Use the Visibility widget to conditionally hide the button
+                    visible: _dashboardController.userRole.value == 'admin',
+                    child: IconButton(
+                      onPressed: () => Get.to(() => const ReservationListScreen()),
+                      icon: const Image(image: AssetImage(tReservation)),
+                    ),
+                  ),
+                  Visibility(
+                    // Use the Visibility widget to conditionally hide the button
+                    visible: _dashboardController.userRole.value == 'admin',
+                    child: IconButton(
+                      onPressed: () => Get.to(() => const PaymentListScreen()),
+                      icon: const Image(image: AssetImage(tPaymentStatus)),
                     ),
                   ),
                   Visibility(

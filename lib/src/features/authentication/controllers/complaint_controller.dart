@@ -20,6 +20,10 @@ class ComplaintController extends GetxController {
     await userRepo.createComplaint(complaint);
   }
 
+  Future<List<ComplaintModel>> getAllComplaintbyEmail(String userEmail) async {
+    return await userRepo.allComplaintbyEmail(userEmail);
+  }
+
   Future<List<ComplaintModel>> getAllComplaint() async {
     return await userRepo.allComplaint();
   }

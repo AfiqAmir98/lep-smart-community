@@ -51,6 +51,12 @@ class UserRepository extends GetxController {
     return complaintData;
   }
 
+  Future<List<ComplaintModel>> allComplaintbyEmail(String userEmail) async {
+    final snapshot = await _db.collection("Complaint").where("userEmail", isEqualTo: userEmail).get();
+    final complaintData = snapshot.docs.map((e) => ComplaintModel.fromSnapshot(e)).toList();
+    return complaintData;
+  }
+
   Future<ComplaintModel?> getComplaintDetails(String? id) async {
     if (id == null) {
       return null;

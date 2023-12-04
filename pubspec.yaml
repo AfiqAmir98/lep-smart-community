@@ -97,6 +97,8 @@ flutter:
     - assets/images/payment.png
     - assets/images/register.png
     - assets/images/complaint-box.png
+    - assets/images/reservation.png
+    - assets/images/payment-status4.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

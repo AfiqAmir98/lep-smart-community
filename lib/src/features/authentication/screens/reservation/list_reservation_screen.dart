@@ -58,6 +58,13 @@ class ReservationListScreen extends StatelessWidget {
                                     subtitle: Column(
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
+                                        Text(
+                                          snapshot.data![index].status,
+                                          style: TextStyle(
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 16, // Set the desired font size
+                                          ),
+                                        ),
                                         Text(DateFormat('dd-MM-yyyy HH:mm:ss').format(snapshot.data![index].dateTime)),
                                         Text(snapshot.data![index].userEmail),
                                       ],
